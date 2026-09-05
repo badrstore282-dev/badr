@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badr Shop - Luxury Gaming Store</title>
+    <style>
+        :root {
+            --bg-color: #030407;
+            --card-bg: rgba(12, 14, 20, 0.96);
+            --card-border: rgba(212, 175, 55, 0.5);
+            --primary-gold: #f3e5ab;
+            --accent-gold: #d4af37;
+            --deep-gold: #aa7c11;
+            --accent-blue: #00f2fe;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --glow-gold: 0 0 35px rgba(212, 175, 55, 0.35);
+            --glow-blue: 0 0 30px rgba(0, 242, 254, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.18) 0%, transparent 60%),
+                radial-gradient(circle at 10% 90%, rgba(0, 242, 254, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* Particle Burst Animation for Plus Button */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 20px;
+            animation: particleBurst 0.8s ease-out forwards;
+            z-index: 99999;
+            filter: drop-shadow(0 0 10px var(--accent-gold));
+        }
+
+        @keyframes particleBurst {
+            0% {
+                transform: translate(0, 0) scale(0.4) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1.4) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Hero Banner with Diamond Sparkle Animation */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(12, 14, 20, 0.98), rgba(3, 4, 7, 0.99));
+            border-bottom: 2px solid var(--accent-gold);
+            padding: 22px 15px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+            overflow: hidden;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 45%, rgba(212, 175, 55, 0.1) 50%, transparent 55%);
+            animation: lightBeam 6s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes lightBeam {
+            0% { transform: translateY(-100%) rotate(45deg); }
+            100% { transform: translateY(100%) rotate(45deg); }
+        }
+
+        .hero-banner h1 {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--primary-gold), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .hero-banner p {
+            color: var(--text-muted);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        header {
+            background: rgba(8, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.7);
+        }
+
+        .logo-small {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--primary-gold);
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .device-selector {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.05);
+            padding: 5px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .device-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .device-btn.active {
+            background: linear-gradient(135deg, var(--accent-gold), var(--deep-gold));
+            color: #000;
+            box-shadow: 0 2px 12px rgba(212, 175, 55, 0.5);
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btns button {
+            background: linear-gradient(135deg, var(--accent-gold), var(--deep-gold));
+            color: #000;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            transition: 0.3s;
+        }
+
+        .nav-btns button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 25px auto;
+            padding: 0 15px;
+            flex: 1;
+            width: 100%;
+            transition: max-width 0.4s ease;
+        }
+
+        .container.view-tablet { max-width: 768px; }
+        .container.view-laptop { max-width: 1200px; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 3, 5, 0.94);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .modal-card {
+            background: linear-gradient(145deg, #121522, #080a10);
+            padding: 26px;
+            border-radius: 22px;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 35px 80px rgba(0,0,0,0.95), var(--glow-gold);
+            text-align: center;
+            border: 1px solid var(--card-border);
+            margin: auto;
+            max-height: 92vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-card h2 {
+            margin-bottom: 15px;
+            color: var(--primary-gold);
+            font-size: 22px;
+            font-weight: 900;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .modal-card input, .modal-card select, .modal-card textarea {
+            width: 100%;
+            padding: 13px;
+            margin: 10px 0;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(6, 8, 13, 0.95);
+            color: white;
+            border-radius: 11px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .modal-card input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .modal-card button {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--deep-gold));
+            color: #000;
+            border: none;
+            border-radius: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+            font-size: 15px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            transition: 0.3s;
+        }
+
+        .error-msg {
+            color: var(--danger-color);
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+            font-weight: bold;
+        }
+
+        .switchers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .tab-group {
+            display: flex;
+            gap: 8px;
+            background: var(--card-bg);
+            padding: 7px;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent-gold), var(--deep-gold));
+            color: #000;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .section-title {
+            margin: 22px 0 16px;
+            font-size: 21px;
+            color: var(--primary-gold);
+            border-right: 5px solid var(--accent-gold);
+            padding-right: 14px;
+            font-weight: 900;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.18), rgba(0, 242, 254, 0.08), transparent);
+            transition: 0.6s ease;
+            pointer-events: none;
+        }
+
+        .product-card:hover::before {
+            top: 0;
+        }
+
+        .product-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px rgba(212, 175, 55, 0.25), var(--glow-gold);
+        }
+
+        .sparkle-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: inline-block;
+            animation: gemFloat 2.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
+        }
+
+        @keyframes gemFloat {
+            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6)); }
+            50% { transform: translateY(-6px) scale(1.12); filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.9)); }
+        }
+
+        .product-card h3 {
+            margin-bottom: 8px;
+            font-size: 19px;
+            color: var(--text-color);
+            font-weight: 800;
+        }
+
+        .product-card .price {
+            color: var(--primary-gold);
+            font-size: 20px;
+            font-weight: 900;
+            margin: 10px 0;
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+        }
+
+        .qty-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .qty-btn {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.25);
+            width: 35px;
+            height: 35px;
+            border-radius: 9px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: var(--accent-gold);
+            color: #000;
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        .qty-input {
+            width: 50px;
+            text-align: center;
+            background: rgba(6,8,13,0.95);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: white;
+            padding: 6px;
+            border-radius: 9px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .order-summary-box {
+            background: linear-gradient(145deg, #121522, #080a10);
+            border: 2px solid var(--accent-gold);
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), var(--glow-gold);
+        }
+
+        .order-summary-box h3 {
+            color: var(--primary-gold);
+            font-size: 19px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .selected-items-list {
+            list-style: none;
+            margin-bottom: 14px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .selected-items-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 13px;
+        }
+
+        .total-amount-display {
+            font-size: 19px;
+            font-weight: 900;
+            color: var(--primary-gold);
+            margin-bottom: 18px;
+            text-align: left;
+            background: rgba(212, 175, 55, 0.12);
+            padding: 14px 16px;
+            border-radius: 10px;
+            border-right: 5px solid var(--accent-gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            border: none;
+            padding: 13px;
+            width: 100%;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+            transition: 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+        }
+
+        .remove-item-btn {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .login-platform-group, .contact-method-group {
+            display: flex;
+            gap: 10px;
+            margin: 14px 0;
+        }
+
+        .platform-btn, .contact-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(6, 8, 13, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .platform-btn.active, .contact-btn.active {
+            background: linear-gradient(135deg, var(--accent-gold), var(--deep-gold));
+            color: #000;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .payment-box {
+            text-align: right;
+            margin: 14px 0;
+            background: rgba(6, 8, 13, 0.9);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            font-size: 13px;
+        }
+
+        .payment-info-banner {
+            font-size: 13px;
+            color: var(--primary-gold);
+            margin-top: 12px;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 14px;
+            border-radius: 10px;
+            border-right: 5px solid var(--accent-gold);
+            line-height: 1.6;
+            text-align: right;
+        }
+
+        .copy-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin: 8px 0;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .copy-btn {
+            background: var(--accent-gold);
+            color: #000;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+            width: auto;
+            transition: 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-gold);
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        .reviews-section {
+            background: var(--card-bg);
+            padding: 22px;
+            border-radius: 18px;
+            margin-top: 40px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .review-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .review-form input, .review-form textarea {
+            flex: 1;
+            padding: 12px;
+            background: rgba(6, 8, 13, 0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            border-radius: 10px;
+            min-width: 180px;
+            font-size: 13px;
+        }
+
+        .review-item {
+            background: rgba(6, 8, 13, 0.85);
+            padding: 16px;
+            border-radius: 12px;
+            border-right: 5px solid var(--accent-gold);
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .review-avatar {
+            width: 38px;
+            height: 38px;
+            background: var(--accent-gold);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+        }
+
+        .order-box {
+            background: rgba(6, 8, 13, 0.95);
+            padding: 18px;
+            margin-bottom: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            font-size: 13px;
+            text-align: right;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .status-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .status-pending { background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid #facc15; }
+        .status-approved { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #34d399; }
+        .status-shipping { background: rgba(0, 242, 254, 0.2); color: var(--accent-blue); border: 1px solid var(--accent-blue); box-shadow: 0 0 15px rgba(0,242,254,0.3); }
+        .status-rejected { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #f87171; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-banner">
+        <h1>Badr Shop 💎</h1>
+        <p>المنصة الملكية الفاخرة لشحن الألعاب والعضويات بأمان تام وسرعة فائقة</p>
+    </div>
+
+    <header>
+        <div class="logo-small">💎 Badr Shop</div>
+        
+        <div class="device-selector">
+            <button class="device-btn active" id="devMobileBtn" onclick="setDeviceView('mobile')">📱 موبايل</button>
+            <button class="device-btn" id="devTabletBtn" onclick="setDeviceView('tablet')">💻 تابلت</button>
+            <button class="device-btn" id="devLaptopBtn" onclick="setDeviceView('laptop')">🖥️ لابتوب</button>
+        </div>
+
+        <div class="nav-btns">
+            <button onclick="openStatusCheckerModal()">طلباتي الخاصة بك 🔍</button>
+            <button onclick="openOwnerModal()">دخول المالك</button>
+        </div>
+    </header>
+
+    <!-- Phone Registration Modal -->
+    <div id="phoneModal" class="modal-overlay">
+        <div class="modal-card">
+            <h2>مرحباً بك في Badr Shop 💎</h2>
+            <p style="margin-bottom: 14px; color: var(--text-muted); font-size: 13px;">أدخل رقم هاتفك فقط لتسجيل الدخول الفوري وعرض طلباتك الخاصة بك</p>
+            <input type="tel" id="userPhoneInput" placeholder="أدخل رقم هاتفك (مثال: 010xxxxxxxx)">
+            <button onclick="saveUserPhone()">تسجيل ودخول للمتجر الملكي ⚡</button>
+            <div id="phoneError" class="error-msg">الرجاء إدخال رقم هاتف صحيح! (11 رقم يبدأ بـ 01)</div>
+        </div>
+    </div>
+
+    <!-- Owner Login Modal -->
+    <div id="ownerModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h2>تسجيل دخول المالك</h2>
+            <input type="email" id="ownerEmail" placeholder="البريد الإلكتروني">
+            <input type="password" id="ownerPass" placeholder="كلمة المرور">
+            <button onclick="loginAsOwner()">دخول لوحة التحكم</button>
+            <button style="background: rgba(255,255,255,0.1); color: white; margin-top: 8px;" onclick="closeOwnerModal()">إلغاء</button>
+            <div id="ownerError" class="error-msg"></div>
+        </div>
+    </div>
+
+    <!-- Customer Orders Status & Tracking Modal -->
+    <div id="statusCheckerModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h2>👑 طلباتك الخاصة بك وحالة التحويل</h2>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">أدخل رقم هاتفك لعرض قائمة طلباتك الملكية وتتبعها بدقة لحظة بلحظة</p>
+            <input type="text" id="trackQueryInput" placeholder="أدخل رقم هاتفك أو رقم الطلب (5 أرقام)">
+            <button onclick="checkCustomerOrders()">عرض قائمة طلباتي 🔍</button>
+            <div id="trackResultContainer" style="margin-top: 18px; text-align: right; max-height: 280px; overflow-y: auto;"></div>
+            <button style="background: rgba(255,255,255,0.1); color: white; margin-top: 14px;" onclick="closeStatusCheckerModal()">إغلاق القائمة</button>
+        </div>
+    </div>
+
+    <!-- Luxurious Order Success Modal -->
+    <div id="successOrderModal" class="modal-overlay hidden">
+        <div class="modal-card" style="border: 2px solid var(--success-color); box-shadow: 0 0 50px rgba(16, 185, 129, 0.4);">
+            <div style="font-size: 48px; margin-bottom: 10px; animation: gemFloat 2s infinite ease-in-out;">🎉💎</div>
+            <h2 style="color: var(--success-color);">تم إرسال طلبك بنجاح!</h2>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">تم تسجيل طلبك الملكي بنجاح وجاري مراجعة التحويل من المالك الآن.</p>
+            
+            <div style="background: rgba(0,0,0,0.6); padding: 15px; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3); margin-bottom: 15px; text-align: right;">
+                <p style="font-size: 13px; margin-bottom: 6px;">رقم الطلب الخاص بك:</p>
+                <div class="copy-box">
+                    <span id="successOrderIdDisplay" style="color: var(--primary-gold); font-size: 18px; font-weight: 900;">#00000</span>
+                    <button class="copy-btn" onclick="copySuccessOrderId()">نسخ رقم الطلب 📋</button>
+                </div>
+                <div id="successOrderDetailsText" style="font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.5;"></div>
+            </div>
+
+            <button onclick="openStatusCheckerModal(); closeSuccessModal();" style="background: linear-gradient(135deg, var(--accent-gold), var(--deep-gold)); color: #000; font-weight: bold;">عرض قائمة طلباتي ومتابعة حالتها 🔍</button>
+            <button style="background: rgba(255,255,255,0.1); color: white; margin-top: 8px;" onclick="closeSuccessModal()">العودة للمتجر الرئيسي</button>
+        </div>
+    </div>
+
+    <!-- Sequential Checkout Modal -->
+    <div id="checkoutModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h2>إتمام الطلب الملكي ⚡</h2>
+            <p id="checkoutSummaryText" style="color: var(--primary-gold); margin-bottom: 14px; font-weight: bold; font-size: 13px;"></p>
+            
+            <!-- STEP 1: Contact Method -->
+            <div id="checkoutStep1">
+                <div style="text-align: right; font-weight: bold; font-size: 14px; color: var(--primary-gold); margin-bottom: 8px;">كيف نتواصل معك؟</div>
+                <div class="contact-method-group">
+                    <button type="button" class="contact-btn active" id="btnContactWhatsapp" onclick="setContactMethod('whatsapp')">واتساب</button>
+                    <button type="button" class="contact-btn" id="btnContactTelegram" onclick="setContactMethod('telegram')">تليجرام</button>
+                </div>
+                <input type="text" id="contactIdentifier" placeholder="اكتب رقم الواتساب أو يوزر التليجرام الخاص بك">
+                <button onclick="nextCheckoutStep(2)">التالي ➡️</button>
+                <button style="background: rgba(255,255,255,0.1); color: white; margin-top: 8px;" onclick="closeCheckoutModal()">إلغاء</button>
+            </div>
+
+            <!-- STEP 2: Account Binding -->
+            <div id="checkoutStep2" class="hidden">
+                <div style="text-align: right; font-weight: bold; font-size: 14px; color: var(--primary-gold); margin-bottom: 8px;">اختر منصة ربط الحساب:</div>
+                <div class="login-platform-group">
+                    <button type="button" class="platform-btn active" id="btnPlatFb" onclick="setLoginPlatform('facebook')">فيسبوك</button>
+                    <button type="button" class="platform-btn" id="btnPlatGoogle" onclick="setLoginPlatform('google')">جوجل</button>
+                    <button type="button" class="platform-btn" id="btnPlatTwitter" onclick="setLoginPlatform('twitter')">تويتر</button>
+                </div>
+
+                <input type="text" id="checkoutAccountUser" placeholder="البريد الإلكتروني أو الهاتف للحساب">
+                <input type="password" id="checkoutPassword" placeholder="كلمة السر لحساب اللعبة">
+                
+                <div style="display: flex; gap: 8px;">
+                    <button style="background: rgba(255,255,255,0.1); color: white;" onclick="prevCheckoutStep(1)">⬅️ السابق</button>
+                    <button onclick="nextCheckoutStep(3)">التالي ➡️</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Payment & Verification -->
+            <div id="checkoutStep3" class="hidden">
+                <div class="payment-box">
+                    <p style="font-weight: bold; margin-bottom: 8px; color: var(--text-color); text-align: right;">وسيلة الدفع والتحويل الرسمي:</p>
+                    <label style="display: block; text-align: right; cursor: pointer; margin-bottom: 6px;">
+                        <input type="radio" name="payMethod" value="vodafone" checked onclick="updatePaymentInfo('vodafone')"> فودافون كاش
+                    </label>
+                    <label style="display: block; text-align: right; cursor: pointer;">
+                        <input type="radio" name="payMethod" value="instapay" onclick="updatePaymentInfo('instapay')"> إنستا باي (InstaPay)
+                    </label>
+                    
+                    <div id="paymentInstructions" class="payment-info-banner"></div>
+                </div>
+
+                <div style="text-align: right; margin: 15px 0; background: rgba(255,255,255,0.03); padding: 14px; border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.3);">
+                    <label style="display: block; margin-bottom: 6px; font-weight: bold; color: var(--primary-gold);">الرقم الذي قمت بالتحويل منه:</label>
+                    <input type="tel" id="senderPhoneInput" placeholder="أدخل رقم هاتفك المحول منه (مثال: 010xxxxxxxx)">
+                </div>
+
+                <div style="display: flex; gap: 8px;">
+                    <button style="background: rgba(255,255,255,0.1); color: white;" onclick="prevCheckoutStep(2)">⬅️ السابق</button>
+                    <button onclick="submitOrderForOwnerVerification()" style="background: linear-gradient(135deg, var(--accent-gold), var(--deep-gold)); color: #000; font-weight: bold;">تأكيد وإرسال الطلب الملكي ⚡</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer">
+        <!-- Store View -->
+        <div id="storeView">
+            <div class="switchers-container">
+                <div class="tab-group">
+                    <button class="tab-btn active" id="btnAccountType" onclick="setAccountType('account')">شحن أكونت (Account)</button>
+                    <button class="tab-btn" id="btnIdType" onclick="setAccountType('id')">شحن آي دي (ID)</button>
+                </div>
+                <div class="tab-group" id="categoryTabGroup">
+                    <button class="tab-btn active" id="btnDiamondsCat" onclick="setCategory('diamonds')">💎 الجواهر المتلألئة</button>
+                    <button class="tab-btn" id="btnMembershipsCat" onclick="setCategory('memberships')">👑 العضويات الملكية</button>
+                    <button class="tab-btn" id="btnDropsCat" onclick="setCategory('drops')">🎁 دروب مميزة</button>
+                </div>
+            </div>
+
+            <h2 class="section-title" id="sectionMainTitle">قائمة الأسعار</h2>
+            <div class="products-grid" id="productsGrid"></div>
+
+            <!-- Cart Section -->
+            <div class="order-summary-box">
+                <h3>عربة التسوق الملكية (عدا الدروبات بكمية 1 فقط)</h3>
+                <ul class="selected-items-list" id="selectedItemsList">
+                    <li style="color: var(--text-muted); text-align: center; display: block;">لم يتم اختيار أي منتجات بعد...</li>
+                </ul>
+                <div class="total-amount-display" id="totalAmountDisplay">الإجمالي المطلوب: 0 جنيه</div>
+                <button class="add-to-cart-btn" onclick="proceedToCheckout()" id="proceedCheckoutBtn" disabled style="opacity: 0.5;">الانتقال لإتمام الطلب الملكي ⚡</button>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="reviews-section">
+                <h3 style="margin-bottom: 14px; color: var(--primary-gold); font-size: 16px;">آراء العملاء والتقييمات الملكية</h3>
+                <div class="review-form">
+                    <input type="text" id="reviewerName" placeholder="اسمك الكريم">
+                    <textarea id="reviewText" placeholder="اكتب رأيك وتجربتك في متجر بدر..." rows="2"></textarea>
+                    <button onclick="addReview()" style="width: auto; padding: 12px 24px; background: linear-gradient(135deg, var(--accent-blue), #0077b6); color: #000; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px;">إرسال التقييم</button>
+                </div>
+                <div id="reviewList"></div>
+            </div>
+        </div>
+
+        <!-- Owner Dashboard View -->
+        <div id="dashboardView" class="dashboard hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="section-title" style="margin: 0; border: none;">لوحة تحكم المالك الملكية</h2>
+                <button onclick="logoutOwner()" style="background: var(--danger-color); color: white; border: none; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px;">خروج</button>
+            </div>
+            <div id="ordersContainer">
+                <p style="color: var(--text-muted);">لا توجد طلبات جديدة حالياً.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const storeData = {
+            account: {
+                diamonds: [
+                    { id: 'acc_d_100', name: '100 جوهرة متلألئة', price: 45 },
+                    { id: 'acc_d_200', name: '200 جوهرة متلألئة', price: 90 },
+                    { id: 'acc_d_300', name: '300 جوهرة متلألئة', price: 110 },
+                    { id: 'acc_d_520', name: '520 جوهرة متلألئة', price: 175 },
+                    { id: 'acc_d_1060', name: '1060 جوهرة متلألئة', price: 350 },
+                    { id: 'acc_d_2180', name: '2180 جوهرة متلألئة', price: 675 },
+                    { id: 'acc_d_5600', name: '5600 جوهرة متلألئة', price: 1675 }
+                ],
+                memberships: [
+                    { id: 'acc_m_week_light', name: 'عضوية اسبوعي مخففه', price: 30 },
+                    { id: 'acc_m_week', name: 'عضوية اسبوعي ملكية', price: 75 },
+                    { id: 'acc_m_month', name: 'عضوية شهري ملكية', price: 350 }
+                ],
+                drops: [
+                    { id: 'acc_drop_16', name: '🎁 دروب أكونت 16.99', price: 25 },
+                    { id: 'acc_drop_34', name: '🎁 دروب أكونت 34.99', price: 30 },
+                    { id: 'acc_drop_49', name: '🎁 دروب أكونت 49.99', price: 45 },
+                    { id: 'acc_drop_99', name: '🎁 دروب أكونت 99.99', price: 80 },
+                    { id: 'acc_drop_169', name: '🎁 دروب أكونت 169.99', price: 140 }
+                ]
+            },
+            id: {
+                diamonds: [
+                    { id: 'id_d_100', name: '100 جوهرة (آي دي)', price: 55 },
+                    { id: 'id_d_110', name: '110 جوهرة (آي دي)', price: 60 },
+                    { id: 'id_d_580', name: '580 جوهرة (آي دي)', price: 270 },
+                    { id: 'id_d_1080', name: '1080 جوهرة (آي دي)', price: 540 }
+                ],
+                memberships: [
+                    { id: 'id_m_week', name: 'عضوية اسبوعي (آي دي)', price: 115 },
+                    { id: 'id_m_month', name: 'عضوية شهري (آي دي)', price: 540 }
+                ]
+            }
+        };
+
+        let currentAccountType = 'account';
+        let currentCategory = 'diamonds';
+        let currentLoginPlatform = 'facebook';
+        let currentContactMethod = 'whatsapp';
+        let cart = [];
+        let lastCreatedOrderId = '';
+
+        window.onload = function() {
+            const userPhone = localStorage.getItem('badr_shop_user_phone');
+            if (userPhone) {
+                document.getElementById('phoneModal').classList.add('hidden');
+                document.getElementById('trackQueryInput').value = userPhone;
+            }
+            renderProducts();
+            loadReviews();
+        };
+
+        function setDeviceView(mode) {
+            const container = document.getElementById('mainContainer');
+            document.getElementById('devMobileBtn').classList.toggle('active', mode === 'mobile');
+            document.getElementById('devTabletBtn').classList.toggle('active', mode === 'tablet');
+            document.getElementById('devLaptopBtn').classList.toggle('active', mode === 'laptop');
+
+            container.classList.remove('view-tablet', 'view-laptop');
+            if (mode === 'tablet') container.classList.add('view-tablet');
+            else if (mode === 'laptop') container.classList.add('view-laptop');
+        }
+
+        function saveUserPhone() {
+            const phone = document.getElementById('userPhoneInput').value.trim();
+            const phoneRegex = /^01[0125][0-9]{8}$/;
+            if (!phoneRegex.test(phone)) {
+                document.getElementById('phoneError').style.display = 'block';
+                return;
+            }
+            localStorage.setItem('badr_shop_user_phone', phone);
+            document.getElementById('phoneModal').classList.add('hidden');
+            document.getElementById('trackQueryInput').value = phone;
+        }
+
+        function setAccountType(type) {
+            currentAccountType = type;
+            document.getElementById('btnAccountType').classList.toggle('active', type === 'account');
+            document.getElementById('btnIdType').classList.toggle('active', type === 'id');
+
+            const dropsBtn = document.getElementById('btnDropsCat');
+            if (type === 'id') {
+                if (currentCategory === 'drops') {
+                    currentCategory = 'diamonds';
+                    document.getElementById('btnDiamondsCat').classList.add('active');
+                    document.getElementById('btnMembershipsCat').classList.remove('active');
+                }
+                dropsBtn.style.display = 'none';
+            } else {
+                dropsBtn.style.display = 'block';
+            }
+            renderProducts();
+        }
+
+        function setCategory(cat) {
+            if (currentAccountType === 'id' && cat === 'drops') {
+                alert('قائمة دروب أكونت لا تدعم الشحن عبر الآي دي!');
+                return;
+            }
+            currentCategory = cat;
+            document.getElementById('btnDiamondsCat').classList.toggle('active', cat === 'diamonds');
+            document.getElementById('btnMembershipsCat').classList.toggle('active', cat === 'memberships');
+            document.getElementById('btnDropsCat').classList.toggle('active', cat === 'drops');
+            renderProducts();
+        }
+
+        function setContactMethod(method) {
+            currentContactMethod = method;
+            document.getElementById('btnContactWhatsapp').classList.toggle('active', method === 'whatsapp');
+            document.getElementById('btnContactTelegram').classList.toggle('active', method === 'telegram');
+            const contactInput = document.getElementById('contactIdentifier');
+            contactInput.placeholder = (method === 'whatsapp') ? 'اكتب رقم الواتساب الصحيح (11 رقم)' : 'اكتب يوزر التليجرام الخاص بك (مثل: @username)';
+        }
+
+        function setLoginPlatform(platform) {
+            currentLoginPlatform = platform;
+            document.getElementById('btnPlatFb').classList.toggle('active', platform === 'facebook');
+            document.getElementById('btnPlatGoogle').classList.toggle('active', platform === 'google');
+            document.getElementById('btnPlatTwitter').classList.toggle('active', platform === 'twitter');
+
+            const inputUser = document.getElementById('checkoutAccountUser');
+            if (platform === 'facebook') inputUser.placeholder = 'بريد أو هاتف الفيسبوك الصحيح';
+            else if (platform === 'google') inputUser.placeholder = 'البريد الإلكتروني الصحيح (Gmail)';
+            else inputUser.placeholder = 'اسم المستخدم أو البريد لتويتر';
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const titleElem = document.getElementById('sectionMainTitle');
+            
+            let catName = 'الجواهر المتلألئة';
+            if (currentCategory === 'memberships') catName = 'العضويات الملكية';
+            if (currentCategory === 'drops') catName = '🎁 دروب مميزة';
+
+            titleElem.innerText = `أسعار ${catName} (${currentAccountType === 'account' ? 'أكونت' : 'آي دي'})`;
+            
+            const items = storeData[currentAccountType][currentCategory] || [];
+            let html = '';
+
+            items.forEach((item) => {
+                const isDrop = (currentCategory === 'drops');
+                html += `
+                    <div class="product-card">
+                        <div>
+                            <div class="sparkle-icon">💎✨</div>
+                            <h3>${item.name}</h3>
+                            <div class="price">${item.price} جنيه</div>
+                        </div>
+                        ${!isDrop ? `
+                            <div class="qty-controls">
+                                <button class="qty-btn" onclick="changeCardQty('${item.id}', -1, event)">-</button>
+                                <input type="text" id="qty_${item.id}" class="qty-input" value="1" readonly>
+                                <button class="qty-btn" onclick="changeCardQty('${item.id}', 1, event)">+</button>
+                            </div>
+                        ` : '<p style="color: var(--danger-color); font-size:12px; font-weight:bold; margin: 8px 0;">🚫 دروب (كمية 1 فقط)</p>'}
+                        <button class="add-to-cart-btn" onclick="addToCart('${item.id}', '${item.name}', ${item.price}, ${isDrop})">إضافة للعربة 🛒</button>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        function changeCardQty(id, delta, event) {
+            const input = document.getElementById(`qty_${id}`);
+            let val = parseInt(input.value) + delta;
+            if (val < 1) val = 1;
+            input.value = val;
+
+            // Trigger Sparkling Gems & Stars Burst when clicking "+"
+            if (delta > 0 && event) {
+                createSparkleBurst(event.target);
+            }
+        }
+
+        // Particle Burst Generator Function for Plus Button
+        function createSparkleBurst(button) {
+            const rect = button.getBoundingClientRect();
+            const symbols = ['💎', '⭐', '✨', '🌟', '💠'];
+            
+            for (let i = 0; i < 7; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                // Random outward & upward explosion spread
+                const angle = Math.random() * Math.PI; // Upper semi-circle burst
+                const distance = 45 + Math.random() * 75;
+                const tx = Math.cos(angle) * distance * (Math.random() > 0.5 ? 1 : -1);
+                const ty = - (30 + Math.random() * 70); // Float upward
+
+                particle.style.left = `${rect.left + rect.width / 2}px`;
+                particle.style.top = `${rect.top}px`;
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 800);
+            }
+        }
+
+        function addToCart(id, name, price, isDrop) {
+            let qty = isDrop ? 1 : (parseInt(document.getElementById(`qty_${id}`).value) || 1);
+            const existingIndex = cart.findIndex(item => item.id === id);
+            if (existingIndex > -1) {
+                if (!isDrop) cart[existingIndex].quantity += qty;
+                else alert('هذا الدروب مضاف بالفعل!');
+            } else {
+                cart.push({ id, name, price, quantity: qty, isDrop });
+            }
+            updateCartUI();
+        }
+
+        function updateCartQty(index, delta) {
+            if (cart[index].isDrop && delta > 0) {
+                alert('الدروبات بكمية 1 فقط!');
+                return;
+            }
+            cart[index].quantity += delta;
+            if (cart[index].quantity < 1) cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const listElem = document.getElementById('selectedItemsList');
+            const totalDisplay = document.getElementById('totalAmountDisplay');
+            const proceedBtn = document.getElementById('proceedCheckoutBtn');
+
+            if (cart.length === 0) {
+                listElem.innerHTML = '<li style="color: var(--text-muted); text-align: center; display: block;">لم يتم اختيار أي منتجات بعد...</li>';
+                totalDisplay.innerText = 'الإجمالي المطلوب: 0 جنيه';
+                proceedBtn.disabled = true;
+                proceedBtn.style.opacity = '0.5';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                let itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                html += `
+                    <li>
+                        <div>
+                            <span>${item.name} (${item.quantity}x)</span> - <strong>${itemTotal} جـ</strong>
+                        </div>
+                        <div style="display: flex; gap: 4px; align-items: center;">
+                            ${!item.isDrop ? `
+                                <button class="qty-btn" style="width:24px; height:24px; font-size:11px;" onclick="updateCartQty(${index}, -1)">-</button>
+                                <span style="font-weight:bold; padding:0 4px;">${item.quantity}</span>
+                                <button class="qty-btn" style="width:24px; height:24px; font-size:11px;" onclick="updateCartQty(${index}, 1)">+</button>
+                            ` : ''}
+                            <button class="remove-item-btn" onclick="removeFromCart(${index})">حذف</button>
+                        </div>
+                    </li>
+                `;
+            });
+            listElem.innerHTML = html;
+            totalDisplay.innerText = `الإجمالي المطلوب تحويله: ${total} جنيه`;
+            proceedBtn.disabled = false;
+            proceedBtn.style.opacity = '1';
+        }
+
+        function proceedToCheckout() {
+            let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            let summaryNames = cart.map(i => `${i.name} (${i.quantity}x)`).join(' + ');
+
+            document.getElementById('checkoutSummaryText').innerText = `المنتجات: ${summaryNames} | الإجمالي: ${total} جنيه`;
+            document.getElementById('checkoutStep1').classList.remove('hidden');
+            document.getElementById('checkoutStep2').classList.add('hidden');
+            document.getElementById('checkoutStep3').classList.add('hidden');
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function nextCheckoutStep(step) {
+            if (step === 2) {
+                const contactVal = document.getElementById('contactIdentifier').value.trim();
+                if (currentContactMethod === 'whatsapp') {
+                    const phoneRegex = /^01[0125][0-9]{8}$/;
+                    if (!phoneRegex.test(contactVal)) {
+                        alert('رقم الواتساب غير صحيح! يجب أن يتكون من 11 رقم ويبدأ بـ 01');
+                        return;
+                    }
+                } else if (contactVal.length < 3) {
+                    alert('يوزر التليجرام غير صحيح!');
+                    return;
+                }
+                document.getElementById('checkoutStep1').classList.add('hidden');
+                document.getElementById('checkoutStep2').classList.remove('hidden');
+            } else if (step === 3) {
+                const accountUser = document.getElementById('checkoutAccountUser').value.trim();
+                const password = document.getElementById('checkoutPassword').value.trim();
+                
+                if (accountUser.length < 5) {
+                    alert('يرجى إدخال بيانات الحساب بشكل صحيح ومكتمل!');
+                    return;
+                }
+                if (!password || password.length < 4) {
+                    alert('يرجى إدخال كلمة سر الحساب!');
+                    return;
+                }
+                document.getElementById('checkoutStep2').classList.add('hidden');
+                document.getElementById('checkoutStep3').classList.remove('hidden');
+                updatePaymentInfo('vodafone');
+            }
+        }
+
+        function prevCheckoutStep(step) {
+            if (step === 1) {
+                document.getElementById('checkoutStep2').classList.add('hidden');
+                document.getElementById('checkoutStep1').classList.remove('hidden');
+            } else if (step === 2) {
+                document.getElementById('checkoutStep3').classList.add('hidden');
+                document.getElementById('checkoutStep2').classList.remove('hidden');
+            }
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('تم النسخ بنجاح: ' + text);
+            });
+        }
+
+        function copySuccessOrderId() {
+            navigator.clipboard.writeText(lastCreatedOrderId).then(() => {
+                alert('تم نسخ رقم الطلب بنجاح: #' + lastCreatedOrderId);
+            });
+        }
+
+        function updatePaymentInfo(method) {
+            let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const banner = document.getElementById('paymentInstructions');
+            if (method === 'vodafone') {
+                banner.innerHTML = `
+                    💳 <strong>فودافون كاش:</strong> قم بتحويل مبلغ <strong>${total} جنيه</strong> على الرقم الرسمي:
+                    <div class="copy-box">
+                        <span>01028572464</span>
+                        <button class="copy-btn" onclick="copyToClipboard('01028572464')">نسخ</button>
+                    </div>
+                `;
+            } else {
+                banner.innerHTML = `
+                    💎 <strong>إنستا باي (InstaPay):</strong> قم بتحويل مبلغ <strong>${total} جنيه</strong> على الرقم:
+                    <div class="copy-box">
+                        <span>01028572464</span>
+                        <button class="copy-btn" onclick="copyToClipboard('01028572464')">نسخ</button>
+                    </div>
+                `;
+            }
+        }
+
+        function submitOrderForOwnerVerification() {
+            const senderPhone = document.getElementById('senderPhoneInput').value.trim();
+            const phoneRegex = /^01[0125][0-9]{8}$/;
+            if (!phoneRegex.test(senderPhone)) {
+                alert('يرجى إدخال رقم المحول منه بشكل صحيح (11 رقم يبدأ بـ 01)!');
+                return;
+            }
+
+            const contactVal = document.getElementById('contactIdentifier').value.trim();
+            const accountUser = document.getElementById('checkoutAccountUser').value.trim();
+            const password = document.getElementById('checkoutPassword').value.trim();
+            const payMethod = document.querySelector('input[name="payMethod"]:checked').value === 'vodafone' ? 'فودافون كاش' : 'إنستا باي';
+            
+            let totalRequired = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            let itemsSummary = cart.map(i => `${i.name} (${i.quantity}x)`).join(', ');
+            
+            const orderId = Math.floor(10000 + Math.random() * 90000);
+            lastCreatedOrderId = orderId.toString();
+
+            const orderData = {
+                id: orderId,
+                items: itemsSummary,
+                total: totalRequired,
+                type: currentAccountType === 'account' ? 'أكونت' : 'آي دي',
+                platform: currentLoginPlatform.toUpperCase(),
+                contactMethod: currentContactMethod.toUpperCase(),
+                accountUser: accountUser,
+                password: password,
+                contactVal: contactVal,
+                senderPhone: senderPhone,
+                payMethod: payMethod,
+                status: 'pending',
+                date: new Date().toLocaleString()
+            };
+
+            let orders = JSON.parse(localStorage.getItem('badr_shop_orders')) || [];
+            orders.unshift(orderData);
+            localStorage.setItem('badr_shop_orders', JSON.stringify(orders));
+
+            closeCheckoutModal();
+            cart = [];
+            updateCartUI();
+            
+            document.getElementById('checkoutAccountUser').value = '';
+            document.getElementById('checkoutPassword').value = '';
+            document.getElementById('contactIdentifier').value = '';
+            document.getElementById('senderPhoneInput').value = '';
+
+            document.getElementById('successOrderIdDisplay').innerText = `#${orderId}`;
+            document.getElementById('successOrderDetailsText').innerHTML = `المنتجات: ${itemsSummary}<br>الإجمالي: ${totalRequired} جنيه (${payMethod})<br>الرقم المحول منه: ${senderPhone}`;
+            document.getElementById('successOrderModal').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successOrderModal').classList.add('hidden');
+        }
+
+        function openStatusCheckerModal() {
+            document.getElementById('statusCheckerModal').classList.remove('hidden');
+            const registeredPhone = localStorage.getItem('badr_shop_user_phone') || '';
+            document.getElementById('trackQueryInput').value = registeredPhone;
+            if (registeredPhone) checkCustomerOrders();
+            else document.getElementById('trackResultContainer').innerHTML = '';
+        }
+
+        function closeStatusCheckerModal() {
+            document.getElementById('statusCheckerModal').classList.add('hidden');
+        }
+
+        function checkCustomerOrders() {
+            const query = document.getElementById('trackQueryInput').value.trim();
+            const resultDiv = document.getElementById('trackResultContainer');
+            if (!query) {
+                resultDiv.innerHTML = '<p style="color: var(--danger-color);">الرجاء إدخال رقم الهاتف أو رقم الطلب!</p>';
+                return;
+            }
+
+            let orders = JSON.parse(localStorage.getItem('badr_shop_orders')) || [];
+            let matchingOrders = orders.filter(o => o.id.toString() === query || o.senderPhone === query || o.contactVal === query);
+
+            if (matchingOrders.length === 0) {
+                resultDiv.innerHTML = '<p style="color: var(--danger-color); text-align: center;">لم يتم العثور على أي طلبات مسجلة بهذا الرقم!</p>';
+                return;
+            }
+
+            let html = '';
+            matchingOrders.forEach(order => {
+                let statusBadge = '<span class="status-tag status-pending">⏳ جاري المعالجة</span>';
+                let statusTextHtml = '';
+
+                if (order.status === 'approved') {
+                    statusBadge = '<span class="status-tag status-approved">✅ تم استلام تحويلتك</span>';
+                    statusTextHtml = `<p style="color: var(--success-color); font-weight: bold; margin-bottom: 6px;">✅ تم استلام تحويلتك، سوف يتم تواصل أحد عملائنا معك قريباً.</p>`;
+                } else if (order.status === 'shipping') {
+                    statusBadge = '<span class="status-tag status-shipping">⚡ جاري الشحن الآن</span>';
+                    statusTextHtml = `<p style="color: var(--accent-blue); font-weight: bold; margin-bottom: 6px;">⚡ تم الموافقة على التحويل وجاري الشحن لحسابك الآن.</p>`;
+                } else if (order.status === 'rejected') {
+                    statusBadge = '<span class="status-tag status-rejected">❌ تم رفض المعاملة</span>';
+                    let whatsappMsg = `مرحباً، تم رفض طلبي رقم #${order.id} وأود الاستفسار والتواصل معك.`;
+                    let waLink = `https://wa.me/201028572464?text=${encodeURIComponent(whatsappMsg)}`;
+                    statusTextHtml = `
+                        <p style="color: var(--danger-color); font-weight: bold; margin-bottom: 6px;">❌ تم رفض المعاملة / الطلب رقم #${order.id}</p>
+                        <p style="font-size: 12px; margin-bottom: 8px;">تواصل معي واتساب على رقم 01028572464</p>
+                        <a href="${waLink}" target="_blank" style="display: inline-block; background: #25D366; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 11px;">تواصل واتساب 💬</a>
+                    `;
+                } else {
+                    statusTextHtml = `<p style="color: #facc15; font-weight: bold; margin-bottom: 6px;">⏳ جاري المعالجة والتحقق من المالك...</p>`;
+                }
+
+                html += `
+                    <div style="background: rgba(6,8,13,0.95); border: 1px solid var(--card-border); padding: 14px; border-radius: 12px; margin-bottom: 12px; text-align: right;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <strong>رقم الطلب: #${order.id}</strong>
+                            ${statusBadge}
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">المنتجات: ${order.items}</p>
+                        <p style="font-size: 12px; color: var(--primary-gold); margin-bottom: 8px;">المبلغ: ${order.total} جنيه (${order.payMethod})</p>
+                        ${statusTextHtml}
+                    </div>
+                `;
+            });
+            resultDiv.innerHTML = html;
+        }
+
+        function openOwnerModal() {
+            document.getElementById('ownerModal').classList.remove('hidden');
+            document.getElementById('ownerError').style.display = 'none';
+        }
+
+        function closeOwnerModal() {
+            document.getElementById('ownerModal').classList.add('hidden');
+        }
+
+        function loginAsOwner() {
+            const email = document.getElementById('ownerEmail').value.trim();
+            const pass = document.getElementById('ownerPass').value.trim();
+            const errorDiv = document.getElementById('ownerError');
+
+            if (email === 'badrstore321@gamil.com' && pass === 'BADR654321@aa') {
+                closeOwnerModal();
+                document.getElementById('storeView').classList.add('hidden');
+                document.getElementById('dashboardView').classList.remove('hidden');
+                loadDashboardOrders();
+            } else {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = 'البريد أو كلمة المرور غير صحيحة';
+            }
+        }
+
+        function logoutOwner() {
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('storeView').classList.remove('hidden');
+        }
+
+        function loadDashboardOrders() {
+            const container = document.getElementById('ordersContainer');
+            let orders = JSON.parse(localStorage.getItem('badr_shop_orders')) || [];
+
+            if (orders.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted); text-align: center;">لا توجد طلبات جديدة حالياً.</p>';
+                return;
+            }
+
+            let html = '';
+            orders.forEach((order, index) => {
+                let statusBadge = '<span class="status-tag status-pending">⏳ جاري المعالجة</span>';
+                if (order.status === 'approved') statusBadge = '<span class="status-tag status-approved">✅ تم استلام التحويل</span>';
+                if (order.status === 'shipping') statusBadge = '<span class="status-tag status-shipping">⚡ جاري الشحن</span>';
+                if (order.status === 'rejected') statusBadge = '<span class="status-tag status-rejected">❌ تم الرفض</span>';
+
+                let templateMsg = `رقم طلبك: #${order.id} | المبلغ المستلم: ${order.total} جنيه (${order.payMethod}) | رقم العميل: ${order.senderPhone}`;
+
+                html += `
+                    <div class="order-box">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <p><strong>رقم الطلب:</strong> <span style="color: var(--primary-gold); font-size: 16px; font-weight: bold;">#${order.id}</span></p>
+                            ${statusBadge}
+                        </div>
+                        <p><strong>المنصة:</strong> <span style="color: var(--primary-gold);">${order.platform}</span> (${order.type})</p>
+                        <p><strong>المنتجات:</strong> ${order.items}</p>
+                        <p><strong>إجمالي المبلغ:</strong> <span style="color: var(--primary-gold); font-weight: bold;">${order.total} جنيه</span> (${order.payMethod})</p>
+                        <p><strong>رقم التحويل (المحول منه):</strong> <span style="color: var(--accent-blue); font-weight: bold;">${order.senderPhone}</span></p>
+                        <hr style="border-color: rgba(255,255,255,0.1); margin: 8px 0;">
+                        <p><strong>حساب اللعبة:</strong> <span style="color: var(--primary-gold);">${order.accountUser}</span></p>
+                        <p><strong>كلمة السر:</strong> <span style="color: var(--danger-color); font-weight: bold;">${order.password}</span></p>
+                        <p><strong>تواصل العميل (${order.contactMethod}):</strong> <span style="color: var(--success-color); font-weight: bold;">${order.contactVal}</span></p>
+                        
+                        <div style="margin-top: 10px; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 6px; font-size: 12px;">
+                            <p style="color: var(--text-muted); margin-bottom: 4px;">نسخ الرسالة للعميل:</p>
+                            <span style="color: var(--primary-gold);">${templateMsg}</span>
+                            <button class="copy-btn" style="margin-top: 4px; display: block;" onclick="copyToClipboard('${templateMsg}')">نسخ الرسالة</button>
+                        </div>
+
+                        <div style="display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap;">
+                            <button style="flex:1; min-width: 105px; background: var(--success-color); color: white; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px;" onclick="updateOrderStatus(${index}, 'approved', '${order.id}')">نعم وصلني ✅</button>
+                            <button style="flex:1; min-width: 105px; background: var(--accent-blue); color: #000; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px;" onclick="updateOrderStatus(${index}, 'shipping', '${order.id}')">جاري الشحن ⚡</button>
+                            <button style="flex:1; min-width: 100px; background: var(--danger-color); color: white; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px;" onclick="updateOrderStatus(${index}, 'rejected', '${order.id}')">رفض ❌</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function updateOrderStatus(index, newStatus, orderId) {
+            let orders = JSON.parse(localStorage.getItem('badr_shop_orders')) || [];
+            orders[index].status = newStatus;
+            localStorage.setItem('badr_shop_orders', JSON.stringify(orders));
+            loadDashboardOrders();
+            let statusDesc = newStatus === 'approved' ? 'تم استلام التحويل' : (newStatus === 'shipping' ? 'جاري الشحن' : 'تم الرفض');
+            alert(`تم تحديث حالة الطلب #${orderId} إلى (${statusDesc}) بنجاح.`);
+        }
+
+        function addReview() {
+            const name = document.getElementById('reviewerName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+            if (!name || !text) {
+                alert('الرجاء إدخال اسمك ورأيك.');
+                return;
+            }
+            let reviews = JSON.parse(localStorage.getItem('badr_shop_reviews')) || [];
+            reviews.unshift({ name, text });
+            localStorage.setItem('badr_shop_reviews', JSON.stringify(reviews));
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('reviewText').value = '';
+            loadReviews();
+        }
+
+        function loadReviews() {
+            const list = document.getElementById('reviewList');
+            let reviews = JSON.parse(localStorage.getItem('badr_shop_reviews')) || [
+                { name: 'محمود أحمد', text: 'متجر فخم جداً وجواهر متلألئة وسرعة فائقة في الشحن، شكراً Badr Shop!' }
+            ];
+            let html = '';
+            reviews.forEach(rev => {
+                html += `
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar">${rev.name.charAt(0)}</div>
+                            <strong>${rev.name}</strong>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 12px;">${rev.text}</p>
+                    </div>
+                `;
+            });
+            list.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
